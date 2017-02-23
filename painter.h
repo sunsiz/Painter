@@ -27,6 +27,7 @@ public:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void mouseGrabber(QMouseEvent *event);
 
 private slots:
     void drawLine();
@@ -38,6 +39,7 @@ private slots:
     void setTransformed(bool transformed);
     void drawLineTo(const QPoint &endPoint);
     void drawPointTo(const QPoint endPoint);
+    void drawTails(const QPoint currentPoint);
     bool openImage(QString &fileName);
     bool saveImage(QString &fileName, const char* fileFormat);
     bool saveFile(const QByteArray &fileFormat);

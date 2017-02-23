@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>688</width>
-    <height>534</height>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>570</x>
       <y>0</y>
       <width>120</width>
-      <height>240</height>
+      <height>270</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -113,8 +113,17 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QCheckBox" name="brushCheckBox">
+       <property name="text">
+        <string>Use Brush</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
+   <zorder>groupBox</zorder>
+   <zorder>horizontalSlider</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

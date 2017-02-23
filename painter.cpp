@@ -6,6 +6,7 @@
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QVector>
 
 Painter::Painter(QWidget *parent) :
     QMainWindow(parent),
@@ -157,6 +158,7 @@ void Painter::drawLineTo(const QPoint &endPoint)
 {
     QPainter painter(&image);
     painter.setPen(pen);
+    painter.setRenderHint(painter.Antialiasing,true);
     //    painter.setPen(QPen(Qt::green, 3, Qt::SolidLine, Qt::RoundCap,
     //                        Qt::RoundJoin));
     //    pen.setWidth(30);
@@ -182,9 +184,26 @@ void Painter::drawPointTo(const QPoint endPoint)
     QPainter painter(&image);
     //    pen.setWidth(9);
     painter.setPen(pen);
+    painter.setRenderHint(painter.Antialiasing,true);
     painter.drawPoint(endPoint);
     update();
     modefied=true;
+}
+
+void Painter::drawTails(const QPoint currentPoint)
+{
+    QPainter painter(&image);
+    painter.setPen(pen);
+    painter.setRenderHint(painter.Antialiasing,true);
+    painter.drawPoint(currentPoint);
+    QVector<QPoint> points;
+    for(int i=0; i<10; i++)
+    {
+        points.append(QPoint(currentPoint.x()+qrand()%10,currentPoint.y()+qrand()%10));
+        points<<QPoint(currentPoint.x()-qrand()%10,currentPoint.y()-qrand()%10);
+    }
+    painter.drawPoints(points);
+    update();
 }
 
 void Painter::mousePressEvent(QMouseEvent *event)
@@ -220,6 +239,11 @@ void Painter::mouseMoveEvent(QMouseEvent *event)
         if(drawingMode=="Any")
             drawLineTo(event->pos());
     }
+    if(ui->brushCheckBox->isChecked())
+    {
+        drawTails(event->pos());
+//        drawTails(QCursor::pos());
+    }
     statusBar()->showMessage(QString("(x,y) coordinates: (%1,%2)").arg(event->x()).arg(event->y()));
 }
 
@@ -234,6 +258,15 @@ void Painter::mouseReleaseEvent(QMouseEvent *event)
         if(drawingMode=="Rectangle")
             drawRectangle(event->pos());
         drawing=false;
+    }
+}
+
+void Painter::mouseGrabber(QMouseEvent *event)
+{
+    if(event->button()==Qt::NoButton)
+    {
+        drawTails(event->pos());
+        drawTails(QCursor::pos());
     }
 }
 
