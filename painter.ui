@@ -122,8 +122,6 @@
      </item>
     </layout>
    </widget>
-   <zorder>groupBox</zorder>
-   <zorder>horizontalSlider</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -150,6 +148,8 @@
      <string>Tools</string>
     </property>
     <addaction name="actionChooseColor"/>
+    <addaction name="actionHideSettings"/>
+    <addaction name="actionStitchPhotos"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTools"/>
@@ -196,6 +196,16 @@
   <action name="actionPrint">
    <property name="text">
     <string>Print</string>
+   </property>
+  </action>
+  <action name="actionHideSettings">
+   <property name="text">
+    <string>Hide Settings</string>
+   </property>
+  </action>
+  <action name="actionStitchPhotos">
+   <property name="text">
+    <string>Stitch Photos</string>
    </property>
   </action>
  </widget>

@@ -29,6 +29,9 @@ public:
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseGrabber(QMouseEvent *event);
 
+//public slots:
+//    void setPenSize(int &newSize);
+
 private slots:
     void drawLine();
     void drawRectangle(QPoint endPoint);
@@ -41,6 +44,7 @@ private slots:
     void drawPointTo(const QPoint endPoint);
     void drawTails(const QPoint currentPoint);
     bool openImage(QString &fileName);
+    bool openImages(QStringList &fileNames);
     bool saveImage(QString &fileName, const char* fileFormat);
     bool saveFile(const QByteArray &fileFormat);
     void clearImage();
@@ -62,6 +66,12 @@ private slots:
     void on_actionChooseColor_triggered();
 
     void on_actionSave_As_triggered();
+
+    void on_actionPenSize_triggered();
+
+    void on_actionStitchPhotos_triggered();
+
+    void on_actionHideSettings_triggered();
 
 private:
     Ui::Painter *ui;

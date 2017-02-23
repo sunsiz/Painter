@@ -305,6 +305,39 @@ bool Painter::openImage(QString &fileName)
     return true;
 }
 
+bool Painter::openImages(QStringList &fileNames)
+{
+    QImage loadedImage;
+    int columns=4;
+    int rows=fileNames.count()/columns+1;
+    int columnWidth=width()/columns;
+    int rowHeight=qMin(height()/rows,200);
+    int counter=0;
+    int rowCounter=0;
+    QPainter painter(&image);
+    painter.setPen(pen);
+    QSize newImageSize=QSize(columnWidth,rowHeight);
+    foreach (QString filename, fileNames)
+    {
+        if(!loadedImage.load(filename))
+            return false;
+//        QSize newSize=loadedImage.size().expandedTo(newImageSize);
+//        resizeImage(&loadedImage,newImageSize);/*newSize*/
+        loadedImage.scaled(newImageSize,Qt::KeepAspectRatio,Qt::FastTransformation);
+        painter.drawImage(QRect(counter*columnWidth,rowCounter*rowHeight,columnWidth,rowHeight),loadedImage);
+//        image+=loadedImage;
+        modefied=false;
+        update();
+        counter++;
+        if(counter==columns)
+        {
+            counter=0;
+            rowCounter+=1;
+        }
+    }
+    return true;
+}
+
 bool Painter::saveImage(QString &fileName, const char *fileFormat)
 {
     QImage visibleImage;
@@ -468,4 +501,31 @@ void Painter::on_actionChooseColor_triggered()
 void Painter::on_actionSave_As_triggered()
 {
     if(saveFile("png"))modefied=false;
+}
+
+void Painter::on_actionPenSize_triggered()
+{
+
+}
+
+void Painter::on_actionStitchPhotos_triggered()
+{
+    QStringList fileNames=QFileDialog::getOpenFileNames(this,"Please select the files you want to stitch together.",QDir::homePath());
+    if(!fileNames.isEmpty())
+    {
+        openImages(fileNames);
+    }
+}
+
+void Painter::on_actionHideSettings_triggered()
+{
+    if(ui->actionHideSettings->text()=="Hide Settings")
+    {
+        ui->groupBox->setVisible(false);
+        ui->actionHideSettings->setText(tr("Show Settings"));
+    }
+    else {
+        ui->groupBox->setVisible(true);
+        ui->actionHideSettings->setText(tr("Hide Settings"));
+    }
 }
